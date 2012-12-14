@@ -1,0 +1,6 @@
+.svn/
+tatool-api/target/
+tatool-app/target/
+tatool-core/target/
+tatool-test/target/
+
