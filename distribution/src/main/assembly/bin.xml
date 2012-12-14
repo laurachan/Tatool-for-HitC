@@ -1,0 +1,64 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>bin</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<moduleSets>
+		<moduleSet>
+
+			<!-- Enable access to all projects in the current multimodule build! -->
+			<useAllReactorProjects>true</useAllReactorProjects>
+
+			<!-- Now, select which projects to include in this module-set. -->
+			<includes>
+				<include>ch.tatool:tatool-api</include>
+				<include>ch.tatool:tatool-core</include>
+				<include>ch.tatool:tatool-app</include>
+				<include>ch.tatool:tatool-test</include>
+			</includes>
+			<binaries>
+				<unpack>false</unpack>
+				<includeDependencies>true</includeDependencies>
+				<dependencySets>
+					<dependencySet>
+						<scope>runtime</scope>
+						<outputDirectory>lib</outputDirectory>
+						<excludes>
+							<exclude>ch.tatool:*</exclude>
+						</excludes>
+					</dependencySet>
+				</dependencySets>
+			</binaries>
+		</moduleSet>
+	</moduleSets>
+	<files>
+		<file>
+			<source>src/main/resources/gpl.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/lgpl.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/README.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/LICENSE.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/CHANGES.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/NOTICE.txt</source>
+			<outputDirectory></outputDirectory>
+		</file>
+	</files>
+</assembly>

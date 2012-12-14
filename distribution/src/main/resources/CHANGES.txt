@@ -1,0 +1,20 @@
+                          Tatool
+                          
+  Release 1.1
+  Date: 10.03.2012
+  -----------
+  Latest Release of Tatool which includes the all new Tatool Online and some minor bugfixes.
+  #1 Fix issue where Tatool Online Dialog would not disappear
+  #2 Release of Tatool Online
+  #3 Fix issue with session index not properly incrementing within module
+  #4 KeyEventHandler refactoring
+  #5 Improve default ID assignment for Tatool Elements
+  #6 rootElement becomes moduleHierarchy in module XML
+  #7 Improve ScoreAndLevelHandler isCompoundDone() method for all possible module hierarchies
+  #8 Fix Error in JavaDoc
+
+
+  Release 1.0
+  Date: 01.01.2012
+  -----------
+  First Release of Tatool. Find all the features on www.tatool.ch.

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+  
+  This file is part of Tatool.
+  
+  Tatool is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or 
+  (at your option) any later version.
+  
+  Tatool is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with Tatool. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<!-- UserAccountService -->
+	<bean id="UserAccountService" class="ch.tatool.app.service.impl.UserAccountServiceImpl">
+		<property name="messages">
+        	<ref bean="Messages"/>
+        </property>
+	</bean>
+	
+	<!-- TrainingService -->
+	<bean id="ModuleService" class="ch.tatool.app.service.impl.ModuleServiceImpl">
+		<property name="dataService">
+        	<ref bean="DataService"/>
+        </property>
+        <property name="messages">
+        	<ref bean="Messages"/>
+        </property>
+	</bean>
+	
+	<!-- DataService -->
+	<bean id="DataService" class="ch.tatool.app.service.impl.DataServiceImpl">
+	</bean>
+	
+	<!-- TrainingExecutionService -->
+	<bean id="ExecutionService" class="ch.tatool.app.service.exec.impl.ExecutionServiceImpl">
+        <property name="dataService">
+        	<ref bean="DataService"/>
+        </property>
+	</bean>
+	
+	<!-- DataExporterService -->
+	<bean id="DataExportService" class="ch.tatool.app.export.DataExportServiceImpl" >
+        <property name="dataService">
+        	<ref bean="DataService"/>
+        </property>
+        <property name="messages">
+        	<ref bean="Messages"/>
+        </property>
+	</bean>
+	
+	<!--
+		ModuleCreatorRegistry is what is injected into the gui.
+		If you want to overwrite the registry, call your new registry directly ModuleCreatorRegistry	
+	-->
+	<alias name="DefaultModuleCreatorRegistry" alias="ModuleCreatorRegistry" />
+
+	<!--
+		DefaultCreatorRegistry
+	-->
+	<bean id="DefaultModuleCreatorRegistry" class="ch.tatool.app.setup.DefaultModuleCreatorRegistry">
+	</bean>
+</beans>

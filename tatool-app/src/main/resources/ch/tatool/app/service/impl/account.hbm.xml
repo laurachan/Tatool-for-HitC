@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+  
+  This file is part of Tatool.
+  
+  Tatool is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or 
+  (at your option) any later version.
+  
+  Tatool is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with Tatool. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="ch.tatool.app.data.UserAccountImpl" table="tatool_account">
+    	<!-- id -->
+    	<id name="id" column="id">
+    		<!-- intentionally no id generator provided. We generate id's randomly in the UserAccountDAO -->
+		</id>
+
+		<property name="name" />
+		
+		<!-- account properties -->
+		<map
+			name="properties"
+			table="tatool_account_prop"
+			lazy="false"			
+		>
+            <key column="id"/>
+            <index column="property_name" type="string"/>
+            <element column="property_value" type="string"/>
+        </map>
+    </class>
+</hibernate-mapping>

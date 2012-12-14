@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+  
+  This file is part of Tatool.
+  
+  Tatool is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or 
+  (at your option) any later version.
+  
+  Tatool is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with Tatool. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="ch.tatool.app.data.ModuleSessionImpl" table="tatool_session">
+    	<!-- id -->
+    	<id name="id" column="id">
+			<generator class="increment"/>
+		</id>
+		
+		<!-- Module -->
+		<many-to-one
+			name="module"
+			class="ch.tatool.app.data.ModuleImpl"
+			column="module_id"
+			not-null="true"
+		/>
+		<!-- 			insert="false"
+			update="false" -->
+		
+		<!-- Session index -->
+		<!-- <property name="index" column="session_index" insert="false" update="false" /> -->
+		<property name="index" column="session_index" />
+		
+		<!-- startTime -->
+		<property name="startTime" type="timestamp" column="starttime"/>
+		
+		<!-- endTime -->
+		<property name="endTime" type="timestamp" column="endtime"/>
+
+		<!-- unit properties -->
+        <set name="entriesImpl"
+			table="tatool_session_data_set"
+			cascade="all-delete-orphan"
+			lazy="false"
+		>
+			<key column="session_id" not-null="true" />
+			<one-to-many entity-name="SessionEntry"/>
+		</set>
+    </class>
+    
+	<class name="ch.tatool.app.data.DataEntryImpl" table="tatool_session_data"  entity-name="SessionEntry">
+    	<!-- id -->
+    	<id name="id" column="id"> 
+			<generator class="native"/>
+		</id>
+
+		<!-- properties -->
+		<property name="nodeId" />
+		<property name="name" />
+		<property name="value" />
+    </class>
+    
+    
+</hibernate-mapping>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+  
+  This file is part of Tatool.
+  
+  Tatool is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or 
+  (at your option) any later version.
+  
+  Tatool is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with Tatool. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="ch.tatool.app.data.ModuleImpl" table="tatool_module">
+    	<!-- id -->
+    	<id name="id" column="id">
+			<generator class="native"/>
+		</id>
+		
+		<!-- Account id - we manage the assignment of the account manually -->
+		<property name="accountId" />
+		
+		<!--  name of the training -->
+		<property name="name" />
+		
+		<!-- module properties -->
+		<map
+			name="moduleProperties"
+			table="tatool_module_prop"
+			cascade="all-delete-orphan"
+			lazy="false"	
+		>
+            <key column="module_id" not-null="true" />
+            <index column="property_name" type="string" />
+            <element column="property_value" type="string" />
+        </map>
+
+        <!-- binary module properties -->
+        <map
+			name="binaryModuleProperties"
+			table="tatool_module_prop_binary"
+			cascade="all-delete-orphan"
+			lazy="false"	
+		>
+            <key column="module_id" not-null="true" />
+            <index column="property_name" type="string" />
+            <element column="property_value" type="org.springframework.orm.hibernate3.support.BlobByteArrayType" />
+            <!-- use this for DERBY
+            <element type="org.springframework.orm.hibernate3.support.BlobByteArrayType">
+            	<column name="property_value" sql-type="BLOB" length="1000000000" not-null="true"/>
+            </element>
+            -->
+        </map>
+        
+        <!-- unit properties -->
+        <set name="entriesImpl"
+			table="tatool_module_data_set"
+			cascade="all-delete-orphan"
+			lazy="false"
+		>
+			<key column="module_id" not-null="true" />
+			<one-to-many entity-name="ModuleEntry"/>
+		</set>
+    </class>
+    
+	<class name="ch.tatool.app.data.DataEntryImpl" table="tatool_module_data"  entity-name="ModuleEntry">
+    	<!-- id -->
+    	<id name="id" column="id"> 
+			<generator class="native"/>
+		</id>
+
+		<!-- properties -->
+		<property name="nodeId" />
+		<property name="name" />
+		<property name="value" length="1000" />
+    </class>
+
+</hibernate-mapping>

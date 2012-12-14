@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+							 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ch.tatool</groupId>
+		<artifactId>tatool-parent</artifactId>
+		<version>1.1</version>
+	</parent>
+	
+	<artifactId>tatool-distribution</artifactId>
+	<packaging>pom</packaging>
+	<name>Tatool Distribution</name>
+  
+  <!-- NOTE: These dependency declarations are only required to sort this project to the 
+       end of the line in the multimodule build. 
+       
+       Since we only include the child1 module in our assembly, we only need to ensure this
+       distribution project builds AFTER that one...
+  -->
+  <dependencies>
+  
+		<!-- Tatool API -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tatool-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Tatool Core -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tatool-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Tatool App -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tatool-app</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Tatool Test -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tatool-test</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+  </dependencies>
+
+  <build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>distro-assembly-bin</id>
+          <phase>package</phase>
+          <goals>
+            <goal>single</goal>
+          </goals>
+          <configuration>
+            <descriptors>
+              <descriptor>src/main/assembly/bin.xml</descriptor>
+            </descriptors>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+	</plugins>
+  </build>
+</project>

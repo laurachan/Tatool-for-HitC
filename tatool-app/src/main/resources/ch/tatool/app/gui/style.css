@@ -1,0 +1,66 @@
+body { 
+font-size:62.5%;
+font-family:arial; 
+background-color: #ffffff; 
+padding: 10px;
+margin: 0;
+}
+
+div.title {
+font-size:1.5em; 
+font-weight:bold; 
+color:#cc3300;
+text-align:center;
+margin-top:5px;
+margin-bottom:0px;
+}
+
+div.text {
+font-size:1.3em; 
+text-align:left;
+margin-top:20px;
+text-align:center;
+}
+
+.highlight_black {
+color:#000000;
+font-weight:bold; 
+}
+
+.highlight_red {
+color:#cc3300;
+font-weight:bold; 
+}
+
+.highlight_big_red {
+color:#cc3300;
+font-weight:bold; 
+font-size:1.5em; 
+}
+
+.tatool_title {
+border-width:1px;
+border-color:#7a7a7a;
+border-style:solid;
+border-collapse:collapse;
+background-color:#cc491e;
+font-size:1.3em; 
+margin-top:20px;
+padding: 3px;
+text-align:center;
+color:#ffffff;
+}
+
+.tatool {
+border-width:1px;
+border-color:#7a7a7a;
+border-style:solid;
+border-collapse:collapse;
+background-color:#f4f4f4;
+font-size:1.3em; 
+margin-top:0px;
+padding: 5px;
+text-align:left;
+}
+
+

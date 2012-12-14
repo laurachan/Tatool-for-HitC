@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+  
+  This file is part of Tatool.
+  
+  Tatool is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published 
+  by the Free Software Foundation, either version 3 of the License, or 
+  (at your option) any later version.
+  
+  Tatool is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public License
+  along with Tatool. If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+	<!--
+		This context is loaded for each single module instance and provides
+		the DAO beans used to interact with the database.
+	-->
+<beans>
+
+	<!-- 
+		DataSource
+	 -->
+	<bean id="userAccountDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- hsql db  
+		Remember to change hibernate mapping in module.hbm.xml of binaryTrainingProperties
+		to type="org.springframework.orm.hibernate3.support.BlobByteArrayType" -->
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:file:${account.data.folder};shutdown=true;hsqldb.default_table_type=cached" /> 
+		<property name="username" value="sa" />
+		<property name="password" value="${account.password}" />
+		
+		<!-- mysql db - attention, this is NOT module dependent 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/tatool?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+		-->	 
+	</bean>
+
+	<!-- Hibernate properties -->
+	<bean id="userAccountHibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<!-- hsql db dialect -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+				
+				<!-- mysql dialect  
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				-->
+				<!-- display created sql -->
+				<prop key="hibernate.show_sql">false</prop>
+				
+				<!-- should the schema be created automatically?
+					 update: create/update schema
+					 create-drop: drop and recreate schema on every start
+				-->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="connection.autocommit">false</prop> 
+
+				<!-- Batch updates disabled -->
+				<prop key="hibernate.jdbc.batch_size">0</prop> 
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- 
+		SessionFactory
+	-->
+	<bean id="userAccountSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="userAccountDataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<ref bean="userAccountHibernateProperties" />
+		</property>
+		<property name="lobHandler">
+			<!-- 
+				Use DefaultLobHandler. Might have to be adapted depending on the used DB.
+			-->
+			<bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>ch/tatool/app/service/impl/account.hbm.xml</value>
+				<value>ch/tatool/app/service/impl/module.hbm.xml</value>
+				<value>ch/tatool/app/service/impl/modulesession.hbm.xml</value>
+				<value>ch/tatool/app/service/impl/trial.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- transaction manager for this account -->
+	<bean id="userAccountTxManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="userAccountSessionFactory"/>
+	</bean>
+	
+	<!--
+		UserAccountDAO
+	-->
+	<bean id="userAccountDAO" class="ch.tatool.app.service.impl.UserAccountDAO">
+		<property name="sessionFactory" ref="userAccountSessionFactory" />
+	</bean>
+	
+	<!--
+		ModuleDAO
+	-->
+	<bean id="moduleDAO" class="ch.tatool.app.service.impl.ModuleDAO">
+		<property name="sessionFactory" ref="userAccountSessionFactory" />
+	</bean>
+
+	<!--
+		SessionDAO
+	-->
+	<bean id="sessionDAO" class="ch.tatool.app.service.impl.ModuleSessionDAO">
+		<property name="sessionFactory" ref="userAccountSessionFactory" />
+	</bean>
+	
+	<!-- 
+		TrialDAO
+	-->
+	<bean id="trialDAO" class="ch.tatool.app.service.impl.TrialDAO">
+		<property name="sessionFactory" ref="userAccountSessionFactory" />
+	</bean>
+	
+</beans>
