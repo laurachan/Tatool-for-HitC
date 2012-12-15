@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2011 Michael Ruflin, André Locher, Claudia von Bastian.
+ * Copyright (c) 2012 Laura Chan.
  * 
  * This file is part of Tatool.
  * 

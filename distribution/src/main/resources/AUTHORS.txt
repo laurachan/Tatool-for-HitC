@@ -1,0 +1,5 @@
+Authors of Tatool for Heads in the Cloud
+
+Original Tatool 1.2.1 design and implementation by Michael Ruflin, André Locher, Claudia von Bastian
+
+Laura Chan: modifications for Heads in the Cloud listed in CHANGES.txt

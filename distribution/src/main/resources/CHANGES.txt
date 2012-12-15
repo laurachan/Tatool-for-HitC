@@ -1,20 +1,47 @@
-                          Tatool
-                          
-  Release 1.1
-  Date: 10.03.2012
-  -----------
-  Latest Release of Tatool which includes the all new Tatool Online and some minor bugfixes.
-  #1 Fix issue where Tatool Online Dialog would not disappear
-  #2 Release of Tatool Online
-  #3 Fix issue with session index not properly incrementing within module
-  #4 KeyEventHandler refactoring
-  #5 Improve default ID assignment for Tatool Elements
-  #6 rootElement becomes moduleHierarchy in module XML
-  #7 Improve ScoreAndLevelHandler isCompoundDone() method for all possible module hierarchies
-  #8 Fix Error in JavaDoc
+Modifications from Tatool 1.2.1
+
+Major changes for Heads in the Cloud (HitC):
+	1)	App.main() receives arguments determining which HitC Tatool module
+		is to be opened at startup.
+		
+	2) 	LoginFrame renamed to LoginManager and GUI components removed; 
+		a single user account is used and automatically loaded instead
+		of having the user select or create an account
+		
+	3)	ModuleManagerFrame renamed to ModuleManager and GUI components removed;
+		now loads the module specified by the App.main() arguments instead of
+		listing the user's modules and letting the user pick/load one. Uses a
+		single LocalFileModuleCreator instead of having a registry that can
+		contain several module creators.
+		
+	4)	LocalFileModuleCreator no longer shows a file chooser but instead
+		retrieves the module file for the module specified by the arguments
+		
+	5)	GuiController.java refactored to reflect the above changes
+	
+	6)	Reduced the number of CSV files exported by ServerDataExporter and 
+		adjusted POST parameters to use those expected by the HitC server	
+	
+
+Minor HitC modifications made to the following files:
+	app-context.xml (adjusted for the refactorings listed above)
+	gui-context.xml (adjusted for the refactorings listed above)
+	messages.properties, messages_de.properties and messages_en.properties (unneeded strings removed)
+	Module.java (removed unused constants and renamed some others)
+	ModuleCreator.java (adjusted for the refactorings listed above)
+	ModuleCreationWorker.java (extra module properties for HitC set, and adjusted for the refactorings listed above)
+	ModuleOverviewFrame.java (removed menu item for opening modules list)
+	All pom.xml files except for distribution/pom.xml (changed tatool-parent version to 1.2.1-FORK) 
 
 
-  Release 1.0
-  Date: 01.01.2012
-  -----------
-  First Release of Tatool. Find all the features on www.tatool.ch.
+Unneeded files that were deleted:
+	CreateAccountFrame.java
+	CreateAccountFrame.form
+	CSVAccountDataExport.java
+	CSVModuleDataExport.java
+	CSVSessionDataExport.java
+	DataServerModuleCreator.java
+	LoginFrame.form
+	ModuleManagerFrame.form
+	TatoolOnlineDialog.java
+	TatoolOnlineDialog.form
